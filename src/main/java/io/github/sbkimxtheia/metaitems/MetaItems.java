@@ -2,7 +2,9 @@ package io.github.sbkimxtheia.metaitems;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class MetaItems extends JavaPlugin {
@@ -24,10 +26,17 @@ public final class MetaItems extends JavaPlugin {
 		// Plugin shutdown logic
 	}
 	
-	public static void Log(String... msg){
-		for (String s : msg) {
-			 String message = prefix + ChatColor.WHITE + " " + s;
-			 logger.sendMessage(message);
+	public static void Log(String... message){
+		for (String s : message) {
+			 String _msg_ = prefix + ChatColor.WHITE + " " + s;
+			 logger.sendMessage(_msg_);
+		}
+	}
+	
+	public static void Message(CommandSender player, String... message){
+		for (String s : message) {
+			String _msg_ = prefix + ChatColor.WHITE + " " + s;
+			player.sendMessage(message);
 		}
 	}
 }

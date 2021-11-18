@@ -1,5 +1,6 @@
 package io.github.sbkimxtheia.metaitems;
 
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -8,18 +9,22 @@ import java.util.List;
 
 public class MetaItem {
 	
+	//-Required-//
+	
 	// Core
-	int metaUid;
-	String codeName;
+	final String codeName;
+	final int metaUid;
 	
 	// Required
-	String displayName;
-	Material material = Material.
+	String displayName = ChatColor.YELLOW + "new MetaItem";
+	Material material = Material.GOLDEN_SWORD;
 	
-	// Optionals
+	//-Optionals-//
+	
 	// Basic
 	boolean unbreakable = false;
 	int customModelData;
+	
 	// Misc
 	List<String> lores;
 	
@@ -27,6 +32,15 @@ public class MetaItem {
 	double wieldDamageBase;
 	double wieldDamageCritAdditional;
 	float wieldCritProb;
+	
+	
+	public MetaItem(String codeName, int uid){
+		this.codeName = codeName;
+		this.metaUid = uid;
+		displayName = codeName;
+	}
+	
+	
 	
 	public ItemStack toItemStack(int amount){
 		ItemStack item = new ItemStack(this.material, amount);
