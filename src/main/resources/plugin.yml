@@ -1,0 +1,7 @@
+name: MetaItems
+version: '${version}'
+main: io.github.sbkimxtheia.metaitems.MetaItems
+api-version: 1.16
+prefix: '[MetaItems]'
+load: STARTUP
+authors: [ sbkimxtheia ]
