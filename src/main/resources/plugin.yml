@@ -2,6 +2,8 @@ name: MetaItems
 version: '${version}'
 main: io.github.sbkimxtheia.metaitems.MetaItems
 api-version: 1.16
-prefix: '[MetaItems]'
+prefix: 'MetaItems'
 load: STARTUP
-authors: [ sbkimxtheia ]
+author: 'sbkimxtheia'
+website: https://github.com/sbkimxtheia/metaitems
+

@@ -1,0 +1,18 @@
+CodeName: 'GreatSword'
+
+Material: 'GOLDEN_SWORD'
+DisplayName: '§7[COMMON] §fThe Great Sword'
+Lores:
+  '§7A Legendary Sword'
+
+ItemDamage: 0
+Unbreakable: false
+
+WieldDamageBase: 5
+WieldDamageCrit: 2
+WieldProbCrit: 0.1
+
+AttributeModifiers:
+  'GENERIC_ATTACK_DAMAGE/ADD_NUMBER/2'
+
+CustomModelData: -2
