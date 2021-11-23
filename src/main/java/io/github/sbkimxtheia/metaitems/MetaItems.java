@@ -8,7 +8,9 @@ import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.io.File;
+import java.io.*;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
 public final class MetaItems extends JavaPlugin {
@@ -27,30 +29,60 @@ public final class MetaItems extends JavaPlugin {
 		File pluginPath = getDataFolder();
 		if (! pluginPath.exists()) pluginPath.mkdir();
 		File presetPath = new File(pluginPath, "presets");
-		if (! presetPath.exists()) presetPath.mkdir();
-		
-		
-		Log(pluginPath.toString());
-		Log(presetPath.toString());
+		if (! presetPath.exists()){
+			presetPath.mkdir();
+		}
+		File example = new File(presetPath, "preset-example.yml");
+		if(!example.exists()) {
+			Log("Trying to Create example preset file...");
+			try {
+				example.createNewFile();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			try {
+				InputStream stream = getResource("preset-example.yml");
+				OutputStream outputStream = new FileOutputStream(example);
+				while(true){
+					int i = stream.read();
+					if(i == -1){
+						break;
+					}
+					else{
+						outputStream.write(i);
+					}
+				}
+				outputStream.close();
+				stream.close();
+				
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
 		
 		File[] files = presetPath.listFiles();
 //		if (files != null && files.length == 0) {
 //			getResource("preset-example.yml").re
 //		}
 		for (File file : files) {
-			Log(file.getAbsolutePath());
-			
+			Log("","Found: " + file.getAbsolutePath());
+			if(!file.getName().endsWith(".yml")){
+				Log(ChatColor.RED + "Skipped " + file.getName() + ": Filename not ends with \".yml\"");
+				continue;
+			}
 			YamlConfiguration configuration = YamlConfiguration.loadConfiguration(file);
 			
 			String codeName = configuration.getString(ItemLoader.CODENAME);
 			if (codeName == null) {
-				Log("CodeName Null");
+				Log(ChatColor.RED + "Skipped " + file.getName() + ": Entry \"CodeName\" is null");
+
 				continue;
 			}
 			
 			Optional<MetaItem> itemOptional = ItemManager.createNew(codeName);
 			if (! itemOptional.isPresent()) {
-				Log("CodeName Duplicates");
+				Log(ChatColor.RED + "Skipped " + file.getName() + ": Codename \"" + codeName + "\" Already exists" );
+				
 				continue;
 			}
 			MetaItem item = itemOptional.get();
@@ -61,9 +93,19 @@ public final class MetaItems extends JavaPlugin {
 			item.setItemDamage(configuration.getInt(ItemLoader.ITEMDAMAGE, 0));
 			item.setUnbreakable(configuration.getBoolean(ItemLoader.Unbreakable, false));
 			item.setWieldDamageBase(configuration.getDouble(ItemLoader.WieldDamageBase, 5.0));
+			List<String> lores = configuration.getStringList(ItemLoader.Lores);
+			for (String lore : lores) {
+				item.addLores(lore);
+			}
+			List<String> attrs = configuration.getStringList(ItemLoader.AttributeModifiers);
+			for (String attr : attrs) {
+				String[] attrToken = attr.split("/");
+			}
 			
-			
-			getServer().getPlayer("SBkimXTHEIA").getInventory().addItem(item.toItemStack(1));
+			Log(
+					"Loaded " + ChatColor.GREEN + item.codeName + ChatColor.WHITE + "! " +
+					ChatColor.GRAY + "(" + file.getPath() + ")", "");
+			Optional.ofNullable(getServer().getPlayer("SBkimXTHEIA")).ifPresent(p -> p.getInventory().addItem(item.toItemStack(1)));
 		}
 	}
 	
@@ -86,7 +128,7 @@ public final class MetaItems extends JavaPlugin {
 	
 	public static void Message (CommandSender player, String... message) {
 		for (String s : message) {
-			String _msg_ = prefix + ChatColor.WHITE + " " + s;
+			String _msg_ = prefix + ChatColor.WHITE + " " + s + ChatColor.WHITE;
 			player.sendMessage(message);
 		}
 	}

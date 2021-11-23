@@ -16,7 +16,7 @@ public class ItemManager {
 		
 		int uid;
 		while(true){
-			int _tmp = ThreadLocalRandom.current().nextInt(-999999, -99999);
+			int _tmp = ThreadLocalRandom.current().nextInt(- 999999, -99999);
 			if(!metaUid_to_metaItem.containsKey(_tmp)){
 				uid = _tmp;
 				break;
