@@ -30,4 +30,8 @@ public class ItemManager {
 		return Optional.of(newItem);
 	}
 	
+	public static boolean register(MetaItem item){
+		
+	}
+	
 }

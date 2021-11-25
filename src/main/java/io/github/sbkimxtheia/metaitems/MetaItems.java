@@ -3,13 +3,15 @@ package io.github.sbkimxtheia.metaitems;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.attribute.Attribute;
+import org.bukkit.attribute.AttributeModifier;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.*;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -100,6 +102,16 @@ public final class MetaItems extends JavaPlugin {
 			List<String> attrs = configuration.getStringList(ItemLoader.AttributeModifiers);
 			for (String attr : attrs) {
 				String[] attrToken = attr.split("/");
+				if(attrToken.length != 4){
+					Log(ChatColor.RED + "Cannot Parse AttributeModifier [ " + ChatColor.WHITE + attr + ChatColor.RED + " ]!" );
+					continue;
+				}
+				String _slotStr_ = attrToken[0];
+				EquipmentSlot slot = _slotStr_.equals("ALL")? null : EquipmentSlot.valueOf(_slotStr_);
+				Attribute attribute = Attribute.valueOf(attrToken[1]);
+				AttributeModifier.Operation operation = AttributeModifier.Operation.valueOf(attrToken[2]);
+				double value = Double.parseDouble(attrToken[3]);
+				item.addAttrModificationList(new AttrModification(attribute, operation,value,slot));
 			}
 			
 			Log(
