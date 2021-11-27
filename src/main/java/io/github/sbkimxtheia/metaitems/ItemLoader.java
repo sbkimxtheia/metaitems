@@ -31,13 +31,15 @@ public class ItemLoader {
 			MATERIAL = "Material",
 			DISPLAYNAME = "DisplayName",
 			Lores = "Lores",
-			ITEMDAMAGE = "ItemDamage",
+			ITEMDAMAGE = "ItemDurabilityDamage",
 			Unbreakable = "Unbreakable",
 			WieldDamageBase = "WieldDamageBase",
 			WieldDamageCrit = "WieldDamageCrit",
 			WieldProbCrit = "WieldProbCrit",
 			AttributeModifiers = "AttributeModifiers",
-			CustomModelData = "CustomModelData";
+			CustomModelData = "CustomModelData",
+			Flags = "Flags",
+			Enchants = "Enchants";
 	
 }
 

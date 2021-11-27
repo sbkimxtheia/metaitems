@@ -7,10 +7,10 @@ import org.bukkit.inventory.EquipmentSlot;
 import java.util.Optional;
 
 public class AttrModification {
-	Attribute targetAttr;
-	AttributeModifier.Operation operation;
-	double value;
-	Optional<EquipmentSlot> slot;
+	final Attribute targetAttr;
+	final AttributeModifier.Operation operation;
+	final double value;
+	final Optional<EquipmentSlot> slot;
 	
 	public AttrModification (Attribute targetAttr, AttributeModifier.Operation operation, double value, EquipmentSlot slot) {
 		this.targetAttr = targetAttr;
@@ -22,5 +22,8 @@ public class AttrModification {
 		else{
 			this.slot = Optional.of(slot);
 		}
+	}
+	public AttrModification (Attribute targetAttr, AttributeModifier.Operation operation, double value){
+		this(targetAttr,operation,value,null);
 	}
 }
