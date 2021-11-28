@@ -39,7 +39,8 @@ public class ItemLoader {
 			AttributeModifiers = "AttributeModifiers",
 			CustomModelData = "CustomModelData",
 			Flags = "Flags",
-			Enchants = "Enchants";
+			Enchants = "Enchants",
+			AllowEnchantTable = "AllowEnchantTable";
 	
 }
 

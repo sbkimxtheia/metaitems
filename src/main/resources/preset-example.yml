@@ -29,8 +29,12 @@ Flags:
 Enchants:
   - 'smite/2/FALSE'
 
+AllowEnchantTable: false
+
 
 CustomModelData: -2
+
+
 
 
 #TODO Enchantable

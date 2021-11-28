@@ -30,6 +30,7 @@ public final class MetaItems extends JavaPlugin {
 	public void onEnable() {
 		plugin = this;
 		logger = Bukkit.getServer().getConsoleSender();
+		getServer().getPluginManager().registerEvents(new EventListener(), plugin);
 		
 		Log("Hello, World!");
 		
@@ -92,12 +93,13 @@ public final class MetaItems extends JavaPlugin {
 			}
 			
 			MetaItem item = new MetaItem(codeName, ItemManager.newUid());
-			Log("Started Importing Properties of new Item " + ChatColor.AQUA + item.codeName + ChatColor.WHITE + "!");
+			Log("Started Loading new Item " + ChatColor.AQUA + item.codeName + ChatColor.WHITE + "!");
 			
 			ArrayList<String> errors = new ArrayList<>();
 			
 			item.setDisplayName(configuration.getString(ItemLoader.DISPLAYNAME, "Empty Item Display Name"));
 			item.setUnbreakable(configuration.getBoolean(ItemLoader.Unbreakable, false));
+			item.setCanEnchantTable(configuration.getBoolean(ItemLoader.AllowEnchantTable, false));
 			
 			// Material
 			String _matStr_ = configuration.getString(ItemLoader.MATERIAL, "GOLDEN_SWORD");
@@ -194,7 +196,7 @@ public final class MetaItems extends JavaPlugin {
 			
 			if (errors.isEmpty()) {
 				ItemManager.register(item);
-				Log("Loaded " + ChatColor.GREEN + item.codeName + ChatColor.WHITE + "! " +
+				Log("Successfully Loaded " + ChatColor.AQUA + item.codeName + ChatColor.WHITE + "! " +
 						ChatColor.GRAY + "(" + file.getPath() + ")", "");
 				Optional.ofNullable(getServer().getPlayer("SBkimXTHEIA")).ifPresent(p -> p.getInventory().addItem(item.toItemStack(1)));
 			}

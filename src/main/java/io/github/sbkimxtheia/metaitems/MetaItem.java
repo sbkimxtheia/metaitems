@@ -19,8 +19,7 @@ import java.util.UUID;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class MetaItem implements Serializable {
-	private static final NamespacedKey KEY_METAUID = new NamespacedKey(MetaItems.plugin, "METAITEMS_METAUID");
-	private static final NamespacedKey KEY_CODENAME = new NamespacedKey(MetaItems.plugin, "METAITEMS_CODENAME");
+
 	
 	//-Required-//
 	
@@ -51,6 +50,11 @@ public class MetaItem implements Serializable {
 	double wieldDamageCritAdditional = 3;
 	float wieldCritProb = 0.1f;
 	ArrayList<AttrModification> attrModificationList = new ArrayList<>();
+	
+
+	
+	// Prevents
+	boolean canEnchantTable = false;
 	
 	
 	// Getter & Setter
@@ -177,16 +181,25 @@ public class MetaItem implements Serializable {
 		displayName = codeName;
 	}
 	
+	// Prevents
+	public boolean isCanEnchantTable() {
+		return canEnchantTable;
+	}
+	
+	public void setCanEnchantTable(boolean canEnchantTable) {
+		this.canEnchantTable = canEnchantTable;
+	}
+	
 	
 	public ItemStack toItemStack(int amount) {
 		ItemStack item = new ItemStack(this.material, amount);
 		ItemMeta meta = MetaItems.plugin.getServer().getItemFactory().getItemMeta(material);
-		meta.getPersistentDataContainer().set(KEY_METAUID, PersistentDataType.INTEGER, metaUid);
-		meta.getPersistentDataContainer().set(KEY_CODENAME, PersistentDataType.STRING, codeName);
+		meta.getPersistentDataContainer().set(ItemManager.KEY_METAUID, PersistentDataType.INTEGER, metaUid);
+		meta.getPersistentDataContainer().set(ItemManager.KEY_CODENAME, PersistentDataType.STRING, codeName);
 		meta.setDisplayName(displayName);
 		meta.setLore(lores);
 		meta.setUnbreakable(unbreakable);
-		if(wieldDamageBase <= 0){
+		if (wieldDamageBase <= 0) {
 			meta.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
 					new AttributeModifier(
 							new UUID(ThreadLocalRandom.current().nextLong(), ThreadLocalRandom.current().nextLong()),
@@ -194,7 +207,7 @@ public class MetaItem implements Serializable {
 							wieldDamageBase,
 							AttributeModifier.Operation.ADD_NUMBER, EquipmentSlot.HAND));
 		}
-
+		
 		int _attrC_ = 0;
 		for (AttrModification attrModification : attrModificationList) {
 			if (attrModification.slot.isPresent()) {
