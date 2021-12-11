@@ -81,14 +81,14 @@ public final class MetaItems extends JavaPlugin {
 			YamlConfiguration configuration = YamlConfiguration.loadConfiguration(file);
 			
 			String codeName = configuration.getString(ItemLoader.CODENAME);
-			if (codeName == null) {
-				Log(ChatColor.RED + "Skipped " + file.getName() + ": Entry \"CodeName\" is null");
+			if (codeName == null || codeName.isEmpty()) {
+				Log(ChatColor.RED + "Skipped " + file.getName() + ": Entry \"CodeName\" is null or empty");
 				
 				continue;
 			}
 			
 			if (! ItemManager.codenameAvailable(codeName)) {
-				Log(ChatColor.RED + "Skipped " + file.getName() + ": Codename \"" + codeName + "\" Already exists");
+				Log(ChatColor.RED + "Skipped " + file.getName() + ": Codename \"" + codeName + "\" Already exists or Invalid!");
 				continue;
 			}
 			
@@ -197,16 +197,18 @@ public final class MetaItems extends JavaPlugin {
 			if (errors.isEmpty()) {
 				ItemManager.register(item);
 				Log("Successfully Loaded " + ChatColor.AQUA + item.codeName + ChatColor.WHITE + "! " +
-						ChatColor.GRAY + "(" + file.getPath() + ")", "");
+						ChatColor.GRAY + "(" + file.getPath() + ")");
 				Optional.ofNullable(getServer().getPlayer("SBkimXTHEIA")).ifPresent(p -> p.getInventory().addItem(item.toItemStack(1)));
 			}
 			else {
 				Log(ChatColor.RED + "Failed to Load " + ChatColor.AQUA + item.codeName + ChatColor.GRAY + " (" + file.getPath() + ")" + ChatColor.WHITE + " :: ");
 				errors.forEach(MetaItems::Log);
 			}
+
 			
 			
 		}
+		Log("", ChatColor.YELLOW + "Finished indexing every single preset files!", "");
 	}
 	
 	@Override

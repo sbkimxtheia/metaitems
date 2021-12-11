@@ -5,6 +5,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Optional;
 import java.util.concurrent.ThreadLocalRandom;
@@ -15,24 +16,31 @@ public class ItemManager {
 	public static final NamespacedKey KEY_CODENAME = new NamespacedKey(MetaItems.plugin, "METAITEMS_CODENAME");
 	
 	// "MAIN" HashMap
-	public static HashMap<Integer, MetaItem> metaUid_to_metaItem = new HashMap<>();
-	public static HashMap<String, MetaItem> codeName_to_metaItem = new HashMap<>();
+	public static HashMap<Integer, MetaItem> items = new HashMap<>();
 	
 	
 	public static boolean codenameAvailable(String codeName) {
-		return ! codeName_to_metaItem.containsKey(codeName);
+		if(codeName == null || codeName.isEmpty() || !(codeName.trim().length() > 0)){
+			return false;
+		}
+		final Collection<MetaItem> _items_ = items.values();
+		for (MetaItem _item_ : _items_) {
+			if (_item_.codeName.equals(codeName)) {
+				return false;
+			}
+		}
+		return true;
 	}
 	
 	public static void register(MetaItem item) {
-		metaUid_to_metaItem.put(item.metaUid, item);
-		codeName_to_metaItem.put(item.codeName, item);
+		items.put(item.metaUid, item);
 	}
 	
 	public static int newUid() {
 		int uid;
 		while (true) {
 			int _tmp = ThreadLocalRandom.current().nextInt(- 999999, - 99999);
-			if (! metaUid_to_metaItem.containsKey(_tmp)) {
+			if (! items.containsKey(_tmp)) {
 				uid = _tmp;
 				break;
 			}
@@ -46,7 +54,7 @@ public class ItemManager {
 		if (meta != null) {
 			Integer uid = meta.getPersistentDataContainer().get(KEY_METAUID, PersistentDataType.INTEGER);
 			if (uid != null) {
-				return Optional.ofNullable(metaUid_to_metaItem.get(uid));
+				return Optional.ofNullable(items.get(uid));
 			}
 		}
 		return Optional.empty();
