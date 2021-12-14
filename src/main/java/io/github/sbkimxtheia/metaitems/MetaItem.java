@@ -51,11 +51,15 @@ public class MetaItem implements Serializable {
 	float wieldCritProb = 0.1f;
 	ArrayList<AttrModification> attrModificationList = new ArrayList<>();
 	
-
-	
 	// Prevents
 	boolean canEnchantTable = false;
 	
+	// Ctor
+	public MetaItem(String codeName, int uid) {
+		this.codeName = codeName;
+		this.metaUid = uid;
+		displayName = codeName;
+	}
 	
 	// Getter & Setter
 	public String getDisplayName() {
@@ -175,11 +179,7 @@ public class MetaItem implements Serializable {
 		return this;
 	}
 	
-	public MetaItem(String codeName, int uid) {
-		this.codeName = codeName;
-		this.metaUid = uid;
-		displayName = codeName;
-	}
+
 	
 	// Prevents
 	public boolean isCanEnchantTable() {
