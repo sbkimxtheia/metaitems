@@ -5,6 +5,7 @@ import org.bukkit.Location;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.enchantment.PrepareItemEnchantEvent;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 
 import java.util.Optional;
 
@@ -25,6 +26,11 @@ public class EventListener implements Listener {
 								", Pos " + ChatColor.GREEN + location.toVector().toBlockVector());
 			}
 		}
+	}
+	
+	@EventHandler
+	private void onDealt(EntityDamageByEntityEvent event){
+		Log(ChatColor.AQUA + "" + event.getDamage());
 	}
 	
 }

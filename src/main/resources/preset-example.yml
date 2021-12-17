@@ -9,6 +9,7 @@ Lores:
 ItemDurabilityDamage: 0
 Unbreakable: true
 
+# WieldDamageBase: Basic Attack damage. -1 to block attacking with this item.
 WieldDamageBase: 5
 WieldDamageCrit: 2
 WieldProbCrit: 0.1

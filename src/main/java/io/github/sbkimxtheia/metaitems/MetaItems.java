@@ -121,9 +121,9 @@ public final class MetaItems extends JavaPlugin {
 			}
 			
 			// Wield Damage
-			double wieldDmgBase = configuration.getDouble(ItemLoader.WieldDamageBase, 5.0);
-			if (wieldDmgBase < 0) {
-				errors.add(ChatColor.RED + "Item Damage must be >= 0! (Input: " + ChatColor.WHITE + wieldDmgBase + ChatColor.RED + ")");
+			double wieldDmgBase = configuration.getDouble(ItemLoader.WieldDamageBase, 1.0);
+			if (wieldDmgBase < -1) {
+				errors.add(ChatColor.RED + "Item Damage must be >= -1! (Input: " + ChatColor.WHITE + wieldDmgBase + ChatColor.RED + ")");
 			}
 			else {
 				item.setWieldDamageBase(wieldDmgBase);

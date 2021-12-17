@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.UUID;
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.stream.Collectors;
 
 public class MetaItem implements Serializable {
 
@@ -197,9 +198,9 @@ public class MetaItem implements Serializable {
 		meta.getPersistentDataContainer().set(ItemManager.KEY_METAUID, PersistentDataType.INTEGER, metaUid);
 		meta.getPersistentDataContainer().set(ItemManager.KEY_CODENAME, PersistentDataType.STRING, codeName);
 		meta.setDisplayName(displayName);
-		meta.setLore(lores);
+		meta.setLore(lores.stream().map(l -> l = ChatColor.WHITE + l).collect(Collectors.toList()));
 		meta.setUnbreakable(unbreakable);
-		if (wieldDamageBase <= 0) {
+		if (wieldDamageBase >= -1) {
 			meta.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
 					new AttributeModifier(
 							new UUID(ThreadLocalRandom.current().nextLong(), ThreadLocalRandom.current().nextLong()),
